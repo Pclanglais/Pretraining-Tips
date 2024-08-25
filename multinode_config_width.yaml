@@ -1,0 +1,98 @@
+checkpoints:
+  checkpoint_interval: 1000  # Adjusted to save checkpoints less frequently
+  checkpoints_path: checkpoints_width_multi
+  checkpoints_path_is_shared_file_system: false
+  resume_checkpoint_path: null
+  save_initial_state: false
+data_stages:
+- data:
+    dataset:
+      dataset_overwrite_cache: false
+      dataset_processing_num_proc_per_process: 96
+      hf_dataset_config_name: null
+      hf_dataset_or_datasets: [to fill]
+      hf_dataset_splits: train
+      text_column_name: text
+    num_loading_workers: 96
+    seed: 42
+  name: Epoch 1
+  start_training_step: 1
+general:
+  benchmark_csv_path: null
+  consumed_train_samples: null
+  ignore_sanity_checks: true
+  project: debug
+  run: 3B_model_multi_10k_steps_%date_%jobid
+  seed: 42
+  step: null
+lighteval: null
+logging:
+  iteration_step_info_interval: 10  # Adjusted for less frequent logging
+  log_level: info
+  log_level_replica: info
+model:
+  ddp_bucket_cap_mb: 25
+  dtype: bfloat16
+  init_method:
+    std: 0.025
+  make_vocab_size_divisible_by: 1
+  model_config:
+    bos_token_id: 1
+    eos_token_id: 0
+    hidden_act: silu
+    hidden_size: 3072
+    initializer_range: 0.02
+    intermediate_size: 12288
+    is_llama_config: true
+    max_position_embeddings: 4096
+    num_attention_heads: 32
+    num_hidden_layers: 28
+    num_key_value_heads: 16
+    pad_token_id: null
+    pretraining_tp: 1
+    rms_norm_eps: 1.0e-05
+    rope_scaling: null
+    tie_word_embeddings: true
+    use_cache: true
+    vocab_size: 32000
+    rope_theta: 1000000 
+optimizer:
+  accumulate_grad_in_fp32: true
+  clip_grad: 1.0
+  learning_rate_scheduler:
+    learning_rate: 0.0006
+    lr_decay_starting_step: 200  # Start decay after warmup
+    lr_decay_steps: 800  # Decay over the remaining 80% of training
+    lr_decay_style: cosine
+    lr_warmup_steps: 200  # 20% warmup
+    lr_warmup_style: linear
+    min_decay_lr: 1.0e-05
+  optimizer_factory:
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-08
+    name: adamW
+    torch_adam_is_fused: true
+  weight_decay: 0.01
+  zero_stage: 2
+parallelism:
+  dp: 48
+  expert_parallel_size: 1
+  pp: 1
+  pp_engine: 1f1b
+  tp: 4
+  tp_linear_async_communication: true
+  tp_mode: REDUCE_SCATTER
+profiler: null
+tokenizer:
+  tokenizer_max_length: null
+  tokenizer_name_or_path: [to fill]
+  tokenizer_revision: null
+tokens:
+  batch_accumulation_per_replica: 1
+  limit_test_batches: 0
+  limit_val_batches: 0
+  micro_batch_size: 16
+  sequence_length: 4096
+  train_steps: 1000  # Updated to 10,000 steps
+  val_check_interval: -1
