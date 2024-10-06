@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os, glob
 
-master_directory = "/lustre/fsn1/projects/rech/fmr/uft12cr/final_set_shuffle/set_2"
+master_directory = "/lustre/fsn1/projects/rech/fmr/uft12cr/final_set_shuffle/set_3"
 
 # Create the output directory if it doesn't exist
 os.makedirs(master_directory, exist_ok=True)
